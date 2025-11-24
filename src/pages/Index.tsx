@@ -30,14 +30,14 @@ const Index = () => {
       {/* Main Content */}
       <HeroSection />
       <PerformanceSection />
+      <div id="modelos">
+        <Gallery />
+      </div>
       <ExclusiveEditions />
       <div id="especificacoes">
         <VersionSelector />
       </div>
       <PartnerSection />
-      <div id="modelos">
-        <Gallery />
-      </div>
       <VideoSection />
       <SupportSection />
 
