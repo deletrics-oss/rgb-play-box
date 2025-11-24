@@ -6,6 +6,30 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Import images
+import arcadeBox1 from "@/assets/products/arcade-box-1.png";
+import arcadeBox2 from "@/assets/products/arcade-box-2.png";
+import arcadeBox3 from "@/assets/products/arcade-box-3.png";
+import arcadeBox4 from "@/assets/products/arcade-box-4.png";
+import arcadeBox5 from "@/assets/products/arcade-box-5.png";
+import arcadeBoxKof from "@/assets/products/arcade-box-kof.png";
+
+// Image mapping
+const imageMap: Record<string, string> = {
+  "/src/assets/products/arcade-box-1.png": arcadeBox1,
+  "/src/assets/products/arcade-box-2.png": arcadeBox2,
+  "/src/assets/products/arcade-box-3.png": arcadeBox3,
+  "/src/assets/products/arcade-box-4.png": arcadeBox4,
+  "/src/assets/products/arcade-box-5.png": arcadeBox5,
+  "/src/assets/products/arcade-box-kof.png": arcadeBoxKof,
+  "arcade-box-1.png": arcadeBox1,
+  "arcade-box-2.png": arcadeBox2,
+  "arcade-box-3.png": arcadeBox3,
+  "arcade-box-4.png": arcadeBox4,
+  "arcade-box-5.png": arcadeBox5,
+  "arcade-box-kof.png": arcadeBoxKof,
+};
+
 interface Edition {
   id: string;
   name: string;
@@ -33,7 +57,14 @@ export function ExclusiveEditions() {
         .order("display_order");
 
       if (error) throw error;
-      setEditions(data || []);
+      
+      // Map database image paths to imported images
+      const mappedData = (data || []).map(edition => ({
+        ...edition,
+        image_url: imageMap[edition.image_url] || edition.image_url
+      }));
+      
+      setEditions(mappedData);
     } catch (error) {
       console.error("Error fetching editions:", error);
     } finally {

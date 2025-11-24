@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 import { HeroSection } from "@/components/home/HeroSection";
 import { PerformanceSection } from "@/components/home/PerformanceSection";
 import { ExclusiveEditions } from "@/components/home/ExclusiveEditions";
@@ -8,20 +7,10 @@ import { PartnerSection } from "@/components/PartnerSection";
 import { Gallery } from "@/components/Gallery";
 import { VideoSection } from "@/components/VideoSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { Button } from "@/components/ui/button";
 import { SupportSection } from "@/components/SupportSection";
-import { LogIn, Settings, Youtube } from "lucide-react";
+import { Youtube } from "lucide-react";
+
 const Index = () => {
-  const {
-    user,
-    isAdmin,
-    signOut
-  } = useAuth();
-  const navigate = useNavigate();
-  const handleSignOut = async () => {
-    await signOut();
-    navigate("/");
-  };
   return <div className="min-h-screen bg-background">
       {/* Navbar */}
       <nav className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50 shadow-lg">
@@ -33,23 +22,7 @@ const Index = () => {
             </h1>
           </Link>
           <div className="flex gap-3 items-center">
-            
-            {user ? <>
-                {isAdmin && <Button asChild variant="outline" size="sm" className="border-secondary text-secondary hover:bg-secondary/10">
-                    <Link to="/edicao">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Admin
-                    </Link>
-                  </Button>}
-                <Button onClick={handleSignOut} variant="outline" size="sm">
-                  Sair
-                </Button>
-              </> : <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
-                <Link to="/auth">
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Entrar
-                </Link>
-              </Button>}
+            {/* Admin system removed as per user request */}
           </div>
         </div>
       </nav>

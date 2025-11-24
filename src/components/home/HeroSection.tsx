@@ -54,8 +54,8 @@ export function HeroSection() {
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground uppercase tracking-wide">Versão Mecânica</p>
                   <p className="text-4xl font-bold text-foreground group-hover:text-primary transition-colors">R$ 999</p>
-                  <a 
-                    href="https://pag.ae/7-gCVPVdY" 
+                   <a 
+                    href="https://pag.ae/81feFTSw1" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block text-sm text-primary hover:underline"
@@ -69,8 +69,8 @@ export function HeroSection() {
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground uppercase tracking-wide">Versão Óptica</p>
                   <p className="text-4xl font-bold text-foreground group-hover:text-secondary transition-colors">R$ 1.299</p>
-                  <a 
-                    href="https://pag.ae/7-gD1yxaF" 
+                   <a 
+                    href="https://pag.ae/81feFTSw1" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block text-sm text-secondary hover:underline"
