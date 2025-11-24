@@ -9,6 +9,7 @@ import { Gallery } from "@/components/Gallery";
 import { VideoSection } from "@/components/VideoSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
+import { SupportSection } from "@/components/SupportSection";
 import { LogIn, Settings, Youtube } from "lucide-react";
 const Index = () => {
   const {
@@ -35,7 +36,7 @@ const Index = () => {
             
             {user ? <>
                 {isAdmin && <Button asChild variant="outline" size="sm" className="border-secondary text-secondary hover:bg-secondary/10">
-                    <Link to="/admin">
+                    <Link to="/edicao">
                       <Settings className="mr-2 h-4 w-4" />
                       Admin
                     </Link>
@@ -61,6 +62,7 @@ const Index = () => {
       <PartnerSection />
       <Gallery />
       <VideoSection />
+      <SupportSection />
 
       {/* Footer */}
       <footer className="border-t border-border bg-card/50 py-12 px-4">
