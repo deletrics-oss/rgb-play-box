@@ -40,10 +40,19 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/50">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/50"
+                onClick={() => document.getElementById('modelos')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Ver Modelos
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 border-2 border-secondary text-secondary hover:bg-secondary/10">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8 border-2 border-secondary text-secondary hover:bg-secondary/10"
+                onClick={() => document.getElementById('especificacoes')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Especificações
               </Button>
             </div>
