@@ -10,18 +10,18 @@ import { VideoSection } from "@/components/VideoSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { LogIn, Settings, Youtube } from "lucide-react";
-
 const Index = () => {
-  const { user, isAdmin, signOut } = useAuth();
+  const {
+    user,
+    isAdmin,
+    signOut
+  } = useAuth();
   const navigate = useNavigate();
-
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Navbar */}
       <nav className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50 shadow-lg">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -32,38 +32,23 @@ const Index = () => {
             </h1>
           </Link>
           <div className="flex gap-3 items-center">
-            <a
-              href="https://youtube.com/@DroopsGames"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-[#FF0000]/50 text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors"
-              aria-label="YouTube"
-            >
-              <Youtube className="h-4 w-4" />
-              <span className="hidden sm:inline text-sm">YouTube</span>
-            </a>
-            {user ? (
-              <>
-                {isAdmin && (
-                  <Button asChild variant="outline" size="sm" className="border-secondary text-secondary hover:bg-secondary/10">
+            
+            {user ? <>
+                {isAdmin && <Button asChild variant="outline" size="sm" className="border-secondary text-secondary hover:bg-secondary/10">
                     <Link to="/admin">
                       <Settings className="mr-2 h-4 w-4" />
                       Admin
                     </Link>
-                  </Button>
-                )}
+                  </Button>}
                 <Button onClick={handleSignOut} variant="outline" size="sm">
                   Sair
                 </Button>
-              </>
-            ) : (
-              <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
+              </> : <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/10">
                 <Link to="/auth">
                   <LogIn className="mr-2 h-4 w-4" />
                   Entrar
                 </Link>
-              </Button>
-            )}
+              </Button>}
           </div>
         </div>
       </nav>
@@ -92,12 +77,7 @@ const Index = () => {
               <ul className="space-y-2 text-muted-foreground">
                 <li>Email: contato@fightarcade.com.br</li>
                 <li>
-                  <a 
-                    href="https://wa.me/5511988121976" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#25D366] transition-colors"
-                  >
+                  <a href="https://wa.me/5511988121976" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] transition-colors">
                     WhatsApp: (11) 98812-1976
                   </a>
                 </li>
@@ -107,22 +87,12 @@ const Index = () => {
               <h4 className="text-lg font-bold text-foreground mb-4">Redes Sociais</h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li>
-                  <a 
-                    href="https://youtube.com/@DroopsGames" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#FF0000] transition-colors"
-                  >
+                  <a href="https://youtube.com/@DroopsGames" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF0000] transition-colors">
                     YouTube
                   </a>
                 </li>
                 <li>
-                  <a 
-                    href="https://instagram.com/dropsgames" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#E4405F] transition-colors"
-                  >
+                  <a href="https://instagram.com/dropsgames" target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] transition-colors">
                     Instagram
                   </a>
                 </li>
@@ -136,8 +106,6 @@ const Index = () => {
       </footer>
 
       <WhatsAppButton />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
