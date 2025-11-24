@@ -44,6 +44,39 @@ export type Database = {
         }
         Relationships: []
       }
+      exclusive_editions: {
+        Row: {
+          active: boolean | null
+          badge: string
+          created_at: string | null
+          display_order: number
+          id: string
+          image_url: string
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          badge: string
+          created_at?: string | null
+          display_order: number
+          id?: string
+          image_url: string
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          badge?: string
+          created_at?: string | null
+          display_order?: number
+          id?: string
+          image_url?: string
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       gallery_images: {
         Row: {
           created_at: string
@@ -68,6 +101,33 @@ export type Database = {
           id?: string
           image_url?: string
           title?: string | null
+        }
+        Relationships: []
+      }
+      product_links: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          id: string
+          platform: string
+          product_version: string
+          url: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          id?: string
+          platform: string
+          product_version: string
+          url: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          id?: string
+          platform?: string
+          product_version?: string
+          url?: string
         }
         Relationships: []
       }
@@ -122,6 +182,27 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          id: string
+          key: string
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          id?: string
+          key: string
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          id?: string
+          key?: string
+          updated_at?: string | null
+          value?: string
         }
         Relationships: []
       }
