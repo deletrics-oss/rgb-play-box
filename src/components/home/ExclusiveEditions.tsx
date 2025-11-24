@@ -13,6 +13,7 @@ import arcadeBox3 from "@/assets/products/arcade-box-3.png";
 import arcadeBox4 from "@/assets/products/arcade-box-4.png";
 import arcadeBox5 from "@/assets/products/arcade-box-5.png";
 import arcadeBoxKof from "@/assets/products/arcade-box-kof.png";
+import arcadeKofComplete from "@/assets/products/arcade-kof-complete.png";
 
 // Image mapping
 const imageMap: Record<string, string> = {
@@ -22,12 +23,14 @@ const imageMap: Record<string, string> = {
   "/src/assets/products/arcade-box-4.png": arcadeBox4,
   "/src/assets/products/arcade-box-5.png": arcadeBox5,
   "/src/assets/products/arcade-box-kof.png": arcadeBoxKof,
+  "/src/assets/products/arcade-kof-complete.png": arcadeKofComplete,
   "arcade-box-1.png": arcadeBox1,
   "arcade-box-2.png": arcadeBox2,
   "arcade-box-3.png": arcadeBox3,
   "arcade-box-4.png": arcadeBox4,
   "arcade-box-5.png": arcadeBox5,
   "arcade-box-kof.png": arcadeBoxKof,
+  "arcade-kof-complete.png": arcadeKofComplete,
 };
 
 interface Edition {
