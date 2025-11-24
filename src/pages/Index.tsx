@@ -31,9 +31,13 @@ const Index = () => {
       <HeroSection />
       <PerformanceSection />
       <ExclusiveEditions />
-      <VersionSelector />
+      <div id="especificacoes">
+        <VersionSelector />
+      </div>
       <PartnerSection />
-      <Gallery />
+      <div id="modelos">
+        <Gallery />
+      </div>
       <VideoSection />
       <SupportSection />
 
