@@ -10,6 +10,9 @@ import { BannerManager } from "@/components/admin/BannerManager";
 import { ProductManager } from "@/components/admin/ProductManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
 import { VideoManager } from "@/components/admin/VideoManager";
+import { ExclusiveEditionsManager } from "@/components/admin/ExclusiveEditionsManager";
+import { ProductLinksManager } from "@/components/admin/ProductLinksManager";
+import { SettingsManager } from "@/components/admin/SettingsManager";
 
 export default function Admin() {
   const { user, isAdmin, loading } = useAuth();
@@ -57,11 +60,14 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="banners" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-7 gap-1">
                 <TabsTrigger value="banners">Banners</TabsTrigger>
                 <TabsTrigger value="products">Produtos</TabsTrigger>
+                <TabsTrigger value="editions">Edições</TabsTrigger>
                 <TabsTrigger value="gallery">Galeria</TabsTrigger>
                 <TabsTrigger value="videos">Vídeos</TabsTrigger>
+                <TabsTrigger value="links">Links</TabsTrigger>
+                <TabsTrigger value="settings">Config</TabsTrigger>
               </TabsList>
 
               <TabsContent value="banners" className="mt-6">
@@ -72,12 +78,24 @@ export default function Admin() {
                 <ProductManager />
               </TabsContent>
 
+              <TabsContent value="editions" className="mt-6">
+                <ExclusiveEditionsManager />
+              </TabsContent>
+
               <TabsContent value="gallery" className="mt-6">
                 <GalleryManager />
               </TabsContent>
 
               <TabsContent value="videos" className="mt-6">
                 <VideoManager />
+              </TabsContent>
+
+              <TabsContent value="links" className="mt-6">
+                <ProductLinksManager />
+              </TabsContent>
+
+              <TabsContent value="settings" className="mt-6">
+                <SettingsManager />
               </TabsContent>
             </Tabs>
           </CardContent>

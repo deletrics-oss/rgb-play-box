@@ -1,46 +1,139 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, Sparkles } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const versions = [
-  {
-    name: "Versão Mecânica",
-    price: "R$ 999",
-    badge: "Popular",
-    badgeColor: "bg-secondary text-secondary-foreground",
-    features: [
-      "Botões mecânicos premium",
-      "Joystick Sanwa compatível",
-      "Resposta tátil precisa",
-      "Durabilidade superior",
-      "Ideal para todos os jogos",
-      "Manutenção facilitada"
-    ],
-    purchaseUrl: "https://pag.ae/7-gCVPVdY",
-    borderColor: "border-secondary/50 hover:border-secondary",
-    icon: Zap
-  },
-  {
-    name: "Versão Óptica",
-    price: "R$ 1.299",
-    badge: "Pro",
-    badgeColor: "bg-primary text-primary-foreground",
-    features: [
-      "Tecnologia óptica avançada",
-      "Zero delay garantido",
-      "Precisão máxima",
-      "Ideal para competições",
-      "Componentes profissionais",
-      "Resposta instantânea"
-    ],
-    purchaseUrl: "https://pag.ae/7-gD1yxaF",
-    borderColor: "border-primary/50 hover:border-primary",
-    icon: Sparkles
-  }
-];
+interface ProductLink {
+  platform: string;
+  url: string;
+}
+
+interface Version {
+  name: string;
+  price: string;
+  badge: string;
+  badgeColor: string;
+  features: string[];
+  links: ProductLink[];
+  borderColor: string;
+  icon: typeof Zap | typeof Sparkles;
+}
 
 export function VersionSelector() {
+  const [versions, setVersions] = useState<Version[]>([]);
+  const [whatsappNumber, setWhatsappNumber] = useState("5511988121976");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [linksResult, settingsResult] = await Promise.all([
+        supabase.from("product_links").select("*").eq("active", true),
+        supabase.from("settings").select("*").eq("key", "whatsapp_number").single(),
+      ]);
+
+      if (settingsResult.data?.value) {
+        setWhatsappNumber(settingsResult.data.value);
+      }
+
+      const mecanicaLinks = linksResult.data
+        ?.filter((l) => l.product_version === "mecanica")
+        .map((l) => ({ platform: l.platform, url: l.url })) || [];
+
+      const opticaLinks = linksResult.data
+        ?.filter((l) => l.product_version === "optica")
+        .map((l) => ({ platform: l.platform, url: l.url })) || [];
+
+      setVersions([
+        {
+          name: "Versão Mecânica",
+          price: "R$ 999",
+          badge: "Popular",
+          badgeColor: "bg-secondary text-secondary-foreground",
+          features: [
+            "Botões mecânicos premium",
+            "Joystick Sanwa compatível",
+            "Resposta tátil precisa",
+            "Durabilidade superior",
+            "Ideal para todos os jogos",
+            "Manutenção facilitada"
+          ],
+          links: mecanicaLinks,
+          borderColor: "border-secondary/50 hover:border-secondary",
+          icon: Zap
+        },
+        {
+          name: "Versão Óptica",
+          price: "R$ 1.299",
+          badge: "Pro",
+          badgeColor: "bg-primary text-primary-foreground",
+          features: [
+            "Tecnologia óptica avançada",
+            "Zero delay garantido",
+            "Precisão máxima",
+            "Ideal para competições",
+            "Componentes profissionais",
+            "Resposta instantânea"
+          ],
+          links: opticaLinks,
+          borderColor: "border-primary/50 hover:border-primary",
+          icon: Sparkles
+        }
+      ]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getWhatsAppLink = (versionName: string, platform: string) => {
+    const message = encodeURIComponent(
+      `Olá! Gostaria de comprar a ${versionName} via ${platform}.`
+    );
+    return `https://wa.me/${whatsappNumber}?text=${message}`;
+  };
+
+  const getButtonLink = (version: Version, platform: string): string => {
+    const link = version.links.find((l) => l.platform === platform);
+    if (link?.url && link.url.trim() !== "") {
+      return link.url;
+    }
+    return getWhatsAppLink(version.name, getPlatformDisplayName(platform));
+  };
+
+  const getPlatformDisplayName = (platform: string): string => {
+    const names: Record<string, string> = {
+      pagseguro: "PagSeguro",
+      shopee: "Shopee",
+      mercadolivre: "Mercado Livre",
+    };
+    return names[platform] || platform;
+  };
+
+  if (loading) {
+    return (
+      <section className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <Skeleton className="h-16 w-96 mx-auto" />
+            <Skeleton className="h-6 w-80 mx-auto" />
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <Skeleton className="h-96 w-full" />
+            <Skeleton className="h-96 w-full" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto">
@@ -57,6 +150,10 @@ export function VersionSelector() {
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {versions.map((version, index) => {
             const Icon = version.icon;
+            const pagseguroLink = getButtonLink(version, "pagseguro");
+            const shopeeLink = getButtonLink(version, "shopee");
+            const mlLink = getButtonLink(version, "mercadolivre");
+
             return (
               <Card 
                 key={index}
@@ -90,19 +187,56 @@ export function VersionSelector() {
                     ))}
                   </ul>
 
-                  <Button 
-                    asChild
-                    size="lg"
-                    className="w-full text-lg font-bold shadow-lg"
-                    variant={index === 1 ? "default" : "secondary"}
-                  >
-                    <a href={version.purchaseUrl} target="_blank" rel="noopener noreferrer">
-                      Comprar Agora
-                    </a>
-                  </Button>
+                  <div className="space-y-3">
+                    <Button 
+                      asChild
+                      size="lg"
+                      className="w-full text-lg font-bold shadow-lg"
+                      variant={index === 1 ? "default" : "secondary"}
+                    >
+                      <a href={pagseguroLink} target="_blank" rel="noopener noreferrer">
+                        Comprar no PagSeguro
+                      </a>
+                    </Button>
+
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-muted-foreground whitespace-nowrap">
+                        Ou compre em:
+                      </span>
+                      
+                      <div className="flex items-center gap-4 flex-1 justify-end">
+                        <a
+                          href={shopeeLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="opacity-70 hover:opacity-100 transition-opacity"
+                          title="Comprar na Shopee"
+                        >
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
+                            alt="Shopee"
+                            className="h-8 w-auto"
+                          />
+                        </a>
+                        
+                        <a
+                          href={mlLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="opacity-70 hover:opacity-100 transition-opacity"
+                          title="Comprar no Mercado Livre"
+                        >
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Mercado_Libre_logo_%282019%29.svg"
+                            alt="Mercado Livre"
+                            className="h-8 w-auto"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
 
-                {/* Glow Effect */}
                 <div className={`absolute inset-0 -z-10 blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 ${index === 1 ? 'bg-primary' : 'bg-secondary'}`} />
               </Card>
             );

@@ -1,8 +1,31 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 
 export function WhatsAppButton() {
-  const whatsappNumber = "5511988121976";
+  const [whatsappNumber, setWhatsappNumber] = useState("5511988121976");
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const { data } = await supabase
+        .from("settings")
+        .select("value")
+        .eq("key", "whatsapp_number")
+        .single();
+      
+      if (data?.value) {
+        setWhatsappNumber(data.value);
+      }
+    } catch (error) {
+      console.error("Error fetching WhatsApp settings:", error);
+    }
+  };
+
   const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
   return (

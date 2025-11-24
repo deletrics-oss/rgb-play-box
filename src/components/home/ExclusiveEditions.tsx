@@ -1,56 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import arcadeBox1 from "@/assets/products/arcade-box-1.png";
-import arcadeBox2 from "@/assets/products/arcade-box-2.png";
-import arcadeBox3 from "@/assets/products/arcade-box-3.png";
-import arcadeBox4 from "@/assets/products/arcade-box-4.png";
-import arcadeBox5 from "@/assets/products/arcade-box-5.png";
-import arcadeBox6 from "@/assets/products/arcade-box-6.png";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const editions = [
-  {
-    id: 1,
-    name: "Mortal Kombat Edition",
-    image: arcadeBox1,
-    badge: "Exclusivo"
-  },
-  {
-    id: 2,
-    name: "Street Fighter Edition",
-    image: arcadeBox2,
-    badge: "Premium"
-  },
-  {
-    id: 3,
-    name: "Tekken Edition",
-    image: arcadeBox3,
-    badge: "Limited"
-  },
-  {
-    id: 4,
-    name: "Dragon Ball Edition",
-    image: arcadeBox4,
-    badge: "Especial"
-  },
-  {
-    id: 5,
-    name: "Retro Classic Edition",
-    image: arcadeBox5,
-    badge: "Clássico"
-  },
-  {
-    id: 6,
-    name: "Custom Art Edition",
-    image: arcadeBox6,
-    badge: "Personalizado"
-  }
-];
+interface Edition {
+  id: string;
+  name: string;
+  badge: string;
+  image_url: string;
+  display_order: number;
+  active: boolean;
+}
 
 export function ExclusiveEditions() {
+  const [editions, setEditions] = useState<Edition[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEditions();
+  }, []);
+
+  const fetchEditions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("exclusive_editions")
+        .select("*")
+        .eq("active", true)
+        .order("display_order");
+
+      if (error) throw error;
+      setEditions(data || []);
+    } catch (error) {
+      console.error("Error fetching editions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="py-24 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <Skeleton className="h-16 w-96 mx-auto" />
+            <Skeleton className="h-6 w-80 mx-auto" />
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Skeleton key={i} className="aspect-square w-full" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -67,39 +74,63 @@ export function ExclusiveEditions() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {editions.map((edition) => (
-              <Card 
-                key={edition.id}
-                className="group relative overflow-hidden bg-card border-border hover:border-primary/50 transition-all duration-300 cursor-pointer hover:shadow-2xl hover:shadow-primary/20"
-                onClick={() => setSelectedImage(edition.image)}
-              >
-                <div className="aspect-square overflow-hidden">
-                  <img 
-                    src={edition.image} 
-                    alt={edition.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <Badge className="w-fit mb-3 bg-primary text-primary-foreground">
-                    {edition.badge}
-                  </Badge>
-                  <h3 className="text-2xl font-bold text-foreground mb-3">
-                    {edition.name}
-                  </h3>
-                  <Button size="sm" variant="secondary" className="w-fit">
-                    Ver Detalhes
-                  </Button>
-                </div>
-              </Card>
-            ))}
+            {editions.map((edition) => {
+              const isLegendary = edition.badge === "LENDÁRIO";
+              
+              return (
+                <Card 
+                  key={edition.id}
+                  className={`group relative overflow-hidden border-2 transition-all duration-300 cursor-pointer hover:shadow-2xl ${
+                    isLegendary
+                      ? "border-orange-500 bg-gradient-to-br from-orange-500/10 to-yellow-500/10 hover:shadow-orange-500/20"
+                      : "bg-card border-border hover:border-primary/50 hover:shadow-primary/20"
+                  }`}
+                  onClick={() => setSelectedImage(edition.image_url)}
+                >
+                  {isLegendary && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-yellow-500/20 animate-pulse pointer-events-none" />
+                  )}
+
+                  <div className="aspect-square overflow-hidden">
+                    <img 
+                      src={edition.image_url} 
+                      alt={edition.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <Badge 
+                      className={`w-fit mb-3 ${
+                        isLegendary
+                          ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-white border-0"
+                          : "bg-primary text-primary-foreground"
+                      }`}
+                    >
+                      {edition.badge}
+                    </Badge>
+                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                      {edition.name}
+                    </h3>
+                    <Button 
+                      size="sm" 
+                      variant={isLegendary ? "default" : "secondary"}
+                      className={
+                        isLegendary
+                          ? "w-fit bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600"
+                          : "w-fit"
+                      }
+                    >
+                      Ver Detalhes
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Lightbox Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-5xl p-0 border-0">
           {selectedImage && (
