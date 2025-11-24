@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Shield, Award } from "lucide-react";
+import { Zap, Shield, Award, Youtube } from "lucide-react";
 import arcadeHero from "@/assets/products/arcade-hero.png";
 
 export function HeroSection() {
@@ -99,6 +99,21 @@ export function HeroSection() {
                 <Shield className="h-4 w-4 mr-2" />
                 Premium Quality
               </Badge>
+              
+              <a
+                href="https://youtube.com/@DroopsGames"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-1/2 -left-4 group"
+              >
+                <Badge 
+                  className="bg-[#FF0000]/90 text-white border-[#FF0000] animate-float px-4 py-2 text-sm font-bold shadow-lg shadow-[#FF0000]/50 cursor-pointer group-hover:bg-[#FF0000] transition-colors"
+                  style={{ animationDelay: '0.75s', animationDuration: '4.5s' }}
+                >
+                  <Youtube className="h-4 w-4 mr-2" />
+                  YouTube
+                </Badge>
+              </a>
               
               <Badge 
                 className="absolute bottom-1/4 -right-4 bg-primary/90 text-primary-foreground border-primary animate-float px-4 py-2 text-sm font-bold shadow-lg shadow-primary/50"
