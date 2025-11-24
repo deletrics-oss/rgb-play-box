@@ -2,6 +2,24 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent } from "./ui/dialog";
 
+// Import gallery images
+import arcadeNaruto from "@/assets/products/arcade-naruto.jpg";
+import arcadeInternalBlue from "@/assets/products/arcade-internal-blue.jpg";
+import arcadeInternalDual from "@/assets/products/arcade-internal-dual.jpg";
+import arcadeInternalWiring from "@/assets/products/arcade-internal-wiring.jpg";
+import arcadePortsPurple from "@/assets/products/arcade-ports-purple.jpg";
+import arcadePortsBlack from "@/assets/products/arcade-ports-black.jpg";
+
+// Image mapping
+const imageMap: Record<string, string> = {
+  "/src/assets/products/arcade-naruto.jpg": arcadeNaruto,
+  "/src/assets/products/arcade-internal-blue.jpg": arcadeInternalBlue,
+  "/src/assets/products/arcade-internal-dual.jpg": arcadeInternalDual,
+  "/src/assets/products/arcade-internal-wiring.jpg": arcadeInternalWiring,
+  "/src/assets/products/arcade-ports-purple.jpg": arcadePortsPurple,
+  "/src/assets/products/arcade-ports-black.jpg": arcadePortsBlack,
+};
+
 interface GalleryImage {
   id: string;
   image_url: string;
@@ -24,7 +42,12 @@ export function Gallery() {
       .order("display_order");
     
     if (data) {
-      setImages(data);
+      // Map database image paths to imported images
+      const mappedData = data.map(image => ({
+        ...image,
+        image_url: imageMap[image.image_url] || image.image_url
+      }));
+      setImages(mappedData);
     }
   };
 
