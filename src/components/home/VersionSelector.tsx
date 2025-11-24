@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, Sparkles } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import mercadoLivreLogo from "@/assets/mercado-livre-logo.png";
 
 interface ProductLink {
   platform: string;
@@ -227,7 +228,7 @@ export function VersionSelector() {
                           title="Comprar no Mercado Livre"
                         >
                           <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Mercado_Libre_logo_%282019%29.svg"
+                            src={mercadoLivreLogo}
                             alt="Mercado Livre"
                             className="h-8 w-auto"
                           />
