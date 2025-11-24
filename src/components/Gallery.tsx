@@ -9,6 +9,10 @@ import arcadeInternalDual from "@/assets/products/arcade-internal-dual.jpg";
 import arcadeInternalWiring from "@/assets/products/arcade-internal-wiring.jpg";
 import arcadePortsPurple from "@/assets/products/arcade-ports-purple.jpg";
 import arcadePortsBlack from "@/assets/products/arcade-ports-black.jpg";
+import arcadeKofFront from "@/assets/products/arcade-kof-front.jpg";
+import arcadeKofSide from "@/assets/products/arcade-kof-side.jpg";
+import arcadeKofInternalOpen from "@/assets/products/arcade-kof-internal-open.jpg";
+import arcadeKofInternalView from "@/assets/products/arcade-kof-internal-view.jpg";
 
 // Image mapping
 const imageMap: Record<string, string> = {
@@ -18,6 +22,10 @@ const imageMap: Record<string, string> = {
   "/src/assets/products/arcade-internal-wiring.jpg": arcadeInternalWiring,
   "/src/assets/products/arcade-ports-purple.jpg": arcadePortsPurple,
   "/src/assets/products/arcade-ports-black.jpg": arcadePortsBlack,
+  "/src/assets/products/arcade-kof-front.jpg": arcadeKofFront,
+  "/src/assets/products/arcade-kof-side.jpg": arcadeKofSide,
+  "/src/assets/products/arcade-kof-internal-open.jpg": arcadeKofInternalOpen,
+  "/src/assets/products/arcade-kof-internal-view.jpg": arcadeKofInternalView,
 };
 
 interface GalleryImage {
