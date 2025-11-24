@@ -7,8 +7,9 @@ import { VersionSelector } from "@/components/home/VersionSelector";
 import { PartnerSection } from "@/components/PartnerSection";
 import { Gallery } from "@/components/Gallery";
 import { VideoSection } from "@/components/VideoSection";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
-import { LogIn, Settings } from "lucide-react";
+import { LogIn, Settings, Youtube } from "lucide-react";
 
 const Index = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -26,11 +27,21 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link to="/" className="group">
             <h1 className="text-2xl md:text-3xl font-black">
-              <span className="text-secondary text-glow-cyan group-hover:text-secondary/80 transition-colors">ARCADE</span>
-              <span className="text-foreground"> BOX</span>
+              <span className="text-secondary text-glow-cyan group-hover:text-secondary/80 transition-colors">FIGHT</span>
+              <span className="text-foreground"> ARCADE</span>
             </h1>
           </Link>
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            <a
+              href="https://youtube.com/@DroopsGames"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-[#FF0000]/50 text-[#FF0000] hover:bg-[#FF0000]/10 transition-colors"
+              aria-label="YouTube"
+            >
+              <Youtube className="h-4 w-4" />
+              <span className="hidden sm:inline text-sm">YouTube</span>
+            </a>
             {user ? (
               <>
                 {isAdmin && (
@@ -71,7 +82,7 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="text-xl font-bold text-secondary mb-4">Arcade Box Designs</h3>
+              <h3 className="text-xl font-bold text-secondary mb-4">Fight Arcade Designs</h3>
               <p className="text-muted-foreground">
                 Arcade fight sticks premium com a melhor qualidade e performance do mercado.
               </p>
@@ -79,24 +90,52 @@ const Index = () => {
             <div>
               <h4 className="text-lg font-bold text-foreground mb-4">Contato</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li>Email: contato@arcadeboxdesigns.com</li>
-                <li>WhatsApp: (11) 99999-9999</li>
+                <li>Email: contato@fightarcade.com.br</li>
+                <li>
+                  <a 
+                    href="https://wa.me/5511988121976" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#25D366] transition-colors"
+                  >
+                    WhatsApp: (11) 98812-1976
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-bold text-foreground mb-4">Links</h4>
+              <h4 className="text-lg font-bold text-foreground mb-4">Redes Sociais</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
+                <li>
+                  <a 
+                    href="https://youtube.com/@DroopsGames" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#FF0000] transition-colors"
+                  >
+                    YouTube
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://instagram.com/dropsgames" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#E4405F] transition-colors"
+                  >
+                    Instagram
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
           <div className="text-center text-muted-foreground pt-8 border-t border-border">
-            <p>© 2024 Arcade Box Designs. Todos os direitos reservados.</p>
+            <p>© 2024 Fight Arcade Designs. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
+
+      <WhatsAppButton />
     </div>
   );
 };
