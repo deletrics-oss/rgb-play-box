@@ -1,1 +1,4 @@
 project_id = "ygfgxhzjmmlgquqrlzzo"
+
+[functions.reset-admin-user]
+verify_jwt = false
