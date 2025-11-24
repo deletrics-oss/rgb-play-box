@@ -62,7 +62,7 @@ export function PartnerSection() {
                   <span>Instagram</span>
                 </a>
                 <a 
-                  href="https://youtube.com/@DroopsGames" 
+                  href="https://www.youtube.com/@DroopsGames" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-muted-foreground hover:text-secondary transition-colors"
