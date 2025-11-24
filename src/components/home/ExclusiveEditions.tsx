@@ -15,6 +15,7 @@ import arcadeBox5 from "@/assets/products/arcade-box-5.png";
 import arcadeBoxKof from "@/assets/products/arcade-box-kof.png";
 import arcadeKofComplete from "@/assets/products/arcade-kof-complete.png";
 import arcadeKofCompleteV2 from "@/assets/products/arcade-kof-complete-v2.png";
+import arcadeKofOrange from "@/assets/products/arcade-kof-orange.jpg";
 
 // Image mapping
 const imageMap: Record<string, string> = {
@@ -26,6 +27,7 @@ const imageMap: Record<string, string> = {
   "/src/assets/products/arcade-box-kof.png": arcadeBoxKof,
   "/src/assets/products/arcade-kof-complete.png": arcadeKofComplete,
   "/src/assets/products/arcade-kof-complete-v2.png": arcadeKofCompleteV2,
+  "/src/assets/products/arcade-kof-orange.jpg": arcadeKofOrange,
   "arcade-box-1.png": arcadeBox1,
   "arcade-box-2.png": arcadeBox2,
   "arcade-box-3.png": arcadeBox3,
@@ -34,6 +36,7 @@ const imageMap: Record<string, string> = {
   "arcade-box-kof.png": arcadeBoxKof,
   "arcade-kof-complete.png": arcadeKofComplete,
   "arcade-kof-complete-v2.png": arcadeKofCompleteV2,
+  "arcade-kof-orange.jpg": arcadeKofOrange,
 };
 
 interface Edition {
